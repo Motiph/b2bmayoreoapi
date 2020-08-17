@@ -1,9 +1,7 @@
 from .base import *
 
 DEBUG = True
-ALLOWED_HOSTS = ['bluesage.tk']
-
-# DATABASES = {
+ALLOWED_HOSTS = ['rdv.bluesage.tk']
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
