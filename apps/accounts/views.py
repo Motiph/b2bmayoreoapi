@@ -47,6 +47,7 @@ class LoginAPIView(APIView):
             token = Token.objects.get(user=user)
 
             data = {
+                'username': profile.user.username,
                 'user': ProfileSerializer(profile).data,
                 'token': token.key
             }
@@ -62,6 +63,7 @@ class TokenAPIView(APIView):
         profile = Profile.objects.get(user=token.user)
 
         data = {
+            'username': profile.user.username,
             'user': ProfileSerializer(profile).data,
             'token': token.key
         }
