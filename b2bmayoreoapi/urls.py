@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path
 
 from apps.accounts.views import LoginAPIView, TokenAPIView, OrderListAPIView, SaveOrderAPIView
-from apps.core.views import PaceSetter
+from apps.core.views import PaceSetter, SendEmail
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginAPIView.as_view()),
     path('get-token/', TokenAPIView.as_view()),
     path('get-orders/<int:user_id>/', OrderListAPIView.as_view()),
     path('save-order/', SaveOrderAPIView.as_view()),
-    path('search-pacesetter/', PaceSetter.as_view())
+    path('search-pacesetter/', PaceSetter.as_view()),
+    path('send-email/', SendEmail.as_view())
 ]

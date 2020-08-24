@@ -5,22 +5,30 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
+
 from .serializers import ProfileSerializer, OrderSerializer
 from .models import Profile, Order
 
 class SaveOrderAPIView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
     def post(self, request, format=None):
         items = request.data['items']
         store = request.data['store']
         # user = request.data['user']
         total = request.data['total']
-        
+        order_number = request.data['orderNumber']
+
         user = User.objects.get(pk=request.data['user'])
         order = Order(
             items=items,
             store=store,
             user=user,
-            total=total
+            total=total,
+            order_number=order_number
         )
 
         order.save()
@@ -30,9 +38,11 @@ class SaveOrderAPIView(APIView):
 class OrderListAPIView(generics.ListAPIView):
     # queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Order.objects.filter(user__id=self.kwargs['user_id'])
+        return Order.objects.filter(user__id=self.kwargs['user_id']).order_by('-created_at')
 
 class LoginAPIView(APIView):
 

@@ -26,7 +26,8 @@ class Order(TimeStampModel):
     store = models.CharField(max_length=20)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total = models.DecimalField( max_digits=19, decimal_places=2)
-    
+    order_number = models.CharField(max_length=200, null=True, blank=True)
+
     def __str__(self):
         return self.user.username
 
